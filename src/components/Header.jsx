@@ -6,7 +6,7 @@ import Button from './Button';
 
 function Header() {
   return (
-    <div className="header">
+    <div className="header" width="100%" display="flex" flex-wrap="wrap">
       <div className="container">
         <Link to="/">
           <div className="header__logo">

@@ -9,7 +9,7 @@ function App() {
   const [pizzas, setPizzas] = React.useState([]);
 
   React.useEffect(() => {
-    axios.get('http://localhost:3001/db.json').then(({ data }) => {
+    axios.get('http://localhost:3000/db.json').then(({ data }) => {
       setPizzas(data.pizzas);
     });
   }, []);
