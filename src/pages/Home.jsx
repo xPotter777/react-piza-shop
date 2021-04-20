@@ -5,6 +5,8 @@ import {setCategory} from "../redux/actions/filters";
 import Loader from "../components/loader/Loader";
 
 
+
+
 const categoryNames = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 const sortIems = [
     { name: 'популярности', type: 'popular', order: 'desc' },
@@ -15,6 +17,7 @@ const sortIems = [
 function Home() {
     const dispatch = useDispatch()
     const items = useSelector(({pizzas}) => pizzas.items )
+    const loaded = useSelector(({pizzas}) => pizzas.isLoaded)
 
     const onSelectCategory = React.useCallback((index) => {
         dispatch(setCategory(index));
@@ -22,9 +25,7 @@ function Home() {
   return (
 
     <div className="container">
-        <hr/>
-        <Loader/>
-        <hr/>
+
       <div className="content__top">
         <Categories
           onClickCategory={onSelectCategory}
@@ -34,9 +35,12 @@ function Home() {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {items && items.map((obj) => (
-          <PizzaBlock key={obj.id} {...obj} />
-        ))}
+          {loaded ?
+              items && items.map((obj) => (
+                  <PizzaBlock key={obj.id} {...obj} />
+              )) : <Loader/>
+          }
+
       </div>
     </div>
   );
