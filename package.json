@@ -148,5 +148,7 @@
       "react-app"
     ]
   },
-  "proxy": "http://localhost:3001"
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
+  }
 }
