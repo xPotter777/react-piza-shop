@@ -1,11 +1,18 @@
 import React from 'react';
 import {Button} from "./index";
 
-const CartItem=({id,name,type,size,image,totalPrice,totalCount,onRemove})=>{
+const CartItem=({id,name,type,size,image,totalPrice,totalCount,onRemove,onAddItem,onMinusItem})=>{
 
     const handleItemRemove = () => {
         onRemove(id)
     }
+    const handlePlusItem = () => {
+        onAddItem(id);
+    };
+
+    const handleMinusItem = () => {
+        onMinusItem(id);
+    };
 
     return (
         <div className="cart__item">
@@ -21,7 +28,7 @@ const CartItem=({id,name,type,size,image,totalPrice,totalCount,onRemove})=>{
                 <p>{type} тесто, {size} см.</p>
             </div>
             <div className="cart__item-count">
-                <div className="button button--outline button--circle cart__item-count-minus">
+                <Button outline className="button--circle cart__item-count-minus" onClick={handleMinusItem}>
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -32,9 +39,9 @@ const CartItem=({id,name,type,size,image,totalPrice,totalCount,onRemove})=>{
                             fill="#EB5A1E"/>
                     </svg>
 
-                </div>
+                </Button>
                 <b>{totalCount}</b>
-                <div className="button button--outline button--circle cart__item-count-plus">
+                <Button outline className="button--circle cart__item-count-plus" onClick={handlePlusItem}>
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -45,7 +52,7 @@ const CartItem=({id,name,type,size,image,totalPrice,totalCount,onRemove})=>{
                             fill="#EB5A1E"/>
                     </svg>
 
-                </div>
+                </Button>
             </div>
             <div className="cart__item-price">
                 <b>{totalPrice} ₽</b>

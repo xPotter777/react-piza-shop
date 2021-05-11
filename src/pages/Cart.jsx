@@ -2,7 +2,7 @@ import React from 'react';
 import CartEmpty from "../components/Cart-empy";
 import CartItem from "../components/CartItem";
 import {useDispatch, useSelector} from "react-redux";
-import {clearCart,removeCartItem} from "../redux/actions/cart";
+import {clearCart,removeCartItem,plusCartItem,minusCartItem} from "../redux/actions/cart";
 import {Link} from "react-router-dom";
 
 function Cart() {
@@ -23,6 +23,12 @@ function Cart() {
     const onRemoveItem = (id) => {
         if (window.confirm('Вы действительно хотите удалить пиццу?'))
             dispatch(removeCartItem(id))
+    }
+    const onAddItem = (id) => {
+        dispatch(plusCartItem(id))
+    }
+    const onMinusItem = (id) => {
+        dispatch(minusCartItem(id))
     }
 
   return (
@@ -63,6 +69,8 @@ function Cart() {
                   {
                       pizzas.map(pizza =>
                       <CartItem
+                          onMinusItem={onMinusItem}
+                          onAddItem={onAddItem}
                           id={pizza.id}
                           onRemove={onRemoveItem}
                           name={pizza.name}
