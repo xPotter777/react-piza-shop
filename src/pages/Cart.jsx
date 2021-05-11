@@ -1,13 +1,29 @@
 import React from 'react';
 import CartEmpty from "../components/Cart-empy";
 import CartItem from "../components/CartItem";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {clearCart,removeCartItem} from "../redux/actions/cart";
+import {Link} from "react-router-dom";
 
 function Cart() {
     const {items,totalPrice,itemsCount} = useSelector(({cart})=> cart)
     const pizzas = Object.keys(items).map(key => {
-        return items[key][0]
+        return items[key].items[0]
     })
+    const dispatch = useDispatch()
+    const onClearCart = () => {
+        if(window.confirm('Вы действительно хотите очистить корзину?'))
+        dispatch(clearCart())
+    }
+    if (itemsCount === 0 ) {
+        return (
+            <CartEmpty/>
+        )
+    }
+    const onRemoveItem = (id) => {
+        if (window.confirm('Вы действительно хотите удалить пиццу?'))
+            dispatch(removeCartItem(id))
+    }
 
   return (
       <div className="container container--cart">
@@ -40,13 +56,22 @@ function Cart() {
                                 strokeLinejoin="round"/>
                       </svg>
 
-                      <span>Очистить корзину</span>
+                      <span onClick={onClearCart}>Очистить корзину</span>
                   </div>
               </div>
               <div className="content__items">
                   {
                       pizzas.map(pizza =>
-                      <CartItem name={pizza.name} type={pizza.type} size={pizza.size} image={pizza.imageUrl}/>
+                      <CartItem
+                          id={pizza.id}
+                          onRemove={onRemoveItem}
+                          name={pizza.name}
+                          type={pizza.type}
+                          size={pizza.size}
+                          image={pizza.imageUrl}
+                          totalPrice={items[pizza.id].totalPrice}
+                          totalCount={items[pizza.id].items.length}
+                      />
                       )
                   }
               </div>
@@ -56,21 +81,19 @@ function Cart() {
                       <span> Сумма заказа: <b>{totalPrice} ₽</b> </span>
                   </div>
                   <div className="cart__bottom-buttons">
-                      <a href="/" className="button button--outline button--add go-back-btn">
+                      <Link to="/" className="button button--outline button--add go-back-btn">
                           <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M7 13L1 6.93015L6.86175 1" stroke="#D3D3D3" strokeWidth="1.5"
                                     strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
-
                           <span>Вернуться назад</span>
-                      </a>
+                      </Link>
                       <div className="button pay-btn">
                           <span>Оплатить сейчас</span>
                       </div>
                   </div>
               </div>
           </div>
-          <CartEmpty/>
       </div>
 
   );

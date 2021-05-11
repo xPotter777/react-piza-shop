@@ -1,6 +1,11 @@
 import React from 'react';
+import {Button} from "./index";
 
-const CartItem=({name,type,size,image})=>{
+const CartItem=({id,name,type,size,image,totalPrice,totalCount,onRemove})=>{
+
+    const handleItemRemove = () => {
+        onRemove(id)
+    }
 
     return (
         <div className="cart__item">
@@ -28,7 +33,7 @@ const CartItem=({name,type,size,image})=>{
                     </svg>
 
                 </div>
-                <b>2</b>
+                <b>{totalCount}</b>
                 <div className="button button--outline button--circle cart__item-count-plus">
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
@@ -43,11 +48,15 @@ const CartItem=({name,type,size,image})=>{
                 </div>
             </div>
             <div className="cart__item-price">
-                <b>770 ₽</b>
+                <b>{totalPrice} ₽</b>
             </div>
             <div className="cart__item-remove">
-                <div className="button button--outline button--circle">
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+                <Button className="button--circle"
+                     outline
+                     onClick={handleItemRemove}
+                >
+                    <svg
+                        width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M5.92001 3.84V5.76V8.64C5.92001 9.17016 5.49017 9.6 4.96001 9.6C4.42985 9.6 4.00001 9.17016 4.00001 8.64L4 5.76L4.00001 3.84V0.96C4.00001 0.42984 4.42985 0 4.96001 0C5.49017 0 5.92001 0.42984 5.92001 0.96V3.84Z"
@@ -57,7 +66,7 @@ const CartItem=({name,type,size,image})=>{
                             fill="#EB5A1E"/>
                     </svg>
 
-                </div>
+                </Button>
             </div>
         </div>
     );

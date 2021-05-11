@@ -55,7 +55,7 @@ function Home() {
           {loaded ?
               items && items.map((obj) => (
                   <PizzaBlock
-                      addedCount={cartItems[obj.id] && cartItems[obj.id].length}
+                      addedCount={cartItems[obj.id] && cartItems[obj.id].items.length}
                       onAddPizza={addPizzaToCartt}
                       key={obj.id} {...obj} />
               )) : <Loader/>
